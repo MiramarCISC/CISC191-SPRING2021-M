@@ -1,4 +1,8 @@
-package edu.sdccd.cisc191.a;
+package edu.sdccd.cisc191.m.server;
+
+
+import edu.sdccd.cisc191.m.MoveRequest;
+import edu.sdccd.cisc191.m.MoveResponse;
 
 import java.net.*;
 import java.io.*;
@@ -13,7 +17,7 @@ import java.io.*;
  * as it is received, rather than creating a separate thread
  * to process the connection.
  */
-public class Server {
+public class GameServer {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
@@ -26,10 +30,35 @@ public class Server {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            CustomerRequest request = CustomerRequest.fromJSON(inputLine);
-            CustomerResponse response = new CustomerResponse(request.getId(), "Jane", "Doe");
-            out.println(CustomerResponse.toJSON(response));
+        while (null!=(inputLine = in.readLine())) {
+            System.out.println(inputLine);
+            boolean legal;
+            Board board = new Board(800,800);
+            board.setBoard();
+
+            MoveRequest request = MoveRequest.fromJSON(inputLine);
+
+
+            int srow = request.getSrow();
+            int scol = request.getScol();
+            int erow = request.getErow();
+            int ecol = request.getEcol();
+            System.out.println(srow);
+            System.out.println(scol);
+            System.out.println(erow);
+            System.out.println(ecol);
+
+            if(board.getSquare(srow,scol).getPiece().getLegalMoves(board,board.getSquare(srow,scol),board.getSquare(erow,ecol))){
+                legal = true;
+            }else{
+                legal = false;
+            }
+
+
+
+
+            MoveResponse response = new MoveResponse(request,legal);
+            out.println(MoveResponse.toJSON(response));
         }
     }
 
@@ -41,7 +70,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server server = new Server();
+        GameServer server = new GameServer();
         try {
             server.start(4444);
             server.stop();
