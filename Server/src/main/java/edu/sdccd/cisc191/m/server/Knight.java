@@ -11,8 +11,8 @@ public class Knight extends Pieces {
     }
 
     @Override
-    public boolean getLegalMoves(Board board, Square start, Square end) {
-        return end.getPiece().isWhite() != this.isWhite();
+    public boolean validateMove(Board board, Square start, Square end) {
+        return end.getPiece().isWhite() != this.isWhite() && Math.abs((start.getRow()-end.getRow())* (start.getColumn()-end.getColumn()))==2;
 
     }
 

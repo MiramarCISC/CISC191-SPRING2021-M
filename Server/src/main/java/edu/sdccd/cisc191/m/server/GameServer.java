@@ -3,9 +3,13 @@ package edu.sdccd.cisc191.m.server;
 
 import edu.sdccd.cisc191.m.MoveRequest;
 import edu.sdccd.cisc191.m.MoveResponse;
+import edu.sdccd.cisc191.m.Player;
 
 import java.net.*;
 import java.io.*;
+
+import java.util.LinkedList;
+
 
 /**
  * This program is a server that takes connection requests on
@@ -22,6 +26,8 @@ public class GameServer {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    private LinkedList <Board> boardStates = new LinkedList<Board>();
+    private LinkedList<Square> boardPosition  = new LinkedList<Square>();
 
     public void start(int port) throws Exception {
         serverSocket = new ServerSocket(port);
@@ -30,31 +36,68 @@ public class GameServer {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         String inputLine;
+        boolean legal;
+        Board board = new Board(800,800);
+        board.resetBoard();
+        board.displayBoard();
+        board.setList();
+        boardPosition = board.getList();
+        Game logic = new Game();
+        int srow, scol, erow, ecol;
+
         while (null!=(inputLine = in.readLine())) {
             System.out.println(inputLine);
-            boolean legal;
-            Board board = new Board(800,800);
-            board.setBoard();
 
             MoveRequest request = MoveRequest.fromJSON(inputLine);
 
 
-            int srow = request.getSrow();
-            int scol = request.getScol();
-            int erow = request.getErow();
-            int ecol = request.getEcol();
+            srow = request.getSrow();
+            scol = request.getScol();
+            erow = request.getErow();
+            ecol = request.getEcol();
+
             System.out.println(srow);
             System.out.println(scol);
             System.out.println(erow);
             System.out.println(ecol);
 
-            if(board.getSquare(srow,scol).getPiece().getLegalMoves(board,board.getSquare(srow,scol),board.getSquare(erow,ecol))){
+            System.out.println("Selected Piece: " + board.getSquare(srow, scol).getPiece().toString());
+
+            Player temp = new Player(true);
+            if(board.getSquare(srow,scol).getPiece().isWhite() == true){
+                temp = logic.getPlayer1();
+            }else{
+                temp = logic.getPlayer2();
+            }
+            if(board.getSquare(srow,scol).getPiece().validateMove(board,board.getSquare(srow,scol),board.getSquare(erow,ecol))
+                   ){ //checks if move is valid
+                int spIndex = 0;
+                int epIndex = 0;
                 legal = true;
+
+                for(int i = 0; i < boardPosition.size(); i++){ //swaps pieces
+                    if(boardPosition.get(i).getRow()==srow&&boardPosition.get(i).getColumn()==scol){ //gets index of Starting Piece
+                       spIndex = i;
+                    }
+                    if(boardPosition.get(i).getRow()==erow&&boardPosition.get(i).getColumn()==ecol){ //gets index of Ending Piece
+                        epIndex = i;
+                    }
+
+                }
+                board.getSquare(srow,scol).setRow(erow);
+                board.getSquare(srow,scol).setColumn(ecol);
+                board.getSquare(erow,ecol).setRow(srow);
+                board.getSquare(erow,ecol).setRow(scol);
+                boardPosition.set(epIndex,boardPosition.get(spIndex)); //sets Ending Square to Starting square
+                boardPosition.set(spIndex, new Square(srow,scol, new Blank())); // sets Starting Square to blank square
+                board.setBoard(boardPosition, srow, scol, erow, ecol, spIndex, epIndex); //sets the position of the Pieces on the 2D Board using the LinkedList
+                boardStates.add(board); //saves the current board state
+                board.displayBoard();
+
             }else{
                 legal = false;
+                board.displayBoard();
             }
-
-
 
 
             MoveResponse response = new MoveResponse(request,legal);
@@ -69,11 +112,13 @@ public class GameServer {
         serverSocket.close();
     }
 
+
+
     public static void main(String[] args) {
         GameServer server = new GameServer();
         try {
             server.start(4444);
-            server.stop();
+            //server.stop();
         } catch(Exception e) {
             e.printStackTrace();
         }

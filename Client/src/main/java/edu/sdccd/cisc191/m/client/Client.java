@@ -5,6 +5,7 @@ import edu.sdccd.cisc191.m.MoveResponse;
 
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 
 /**
  * This program opens a connection to a computer specified
@@ -23,6 +24,10 @@ public class Client {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    private Scanner scnr;
+    public Client(){
+        scnr = new Scanner(System.in);
+    }
 
     public void startConnection(String ip, int port) throws IOException {
         clientSocket = new Socket(ip, port);
@@ -31,7 +36,15 @@ public class Client {
     }
 
     public MoveResponse sendRequest() throws Exception {
-        out.println(MoveRequest.toJSON(new MoveRequest(0,0,6,0)));
+        System.out.println("Enter Starting Row:");
+        int srow = scnr.nextInt();
+        System.out.println("Enter Starting Column:");
+        int scol = scnr.nextInt();
+        System.out.println("Enter Ending Row:");
+        int erow = scnr.nextInt();
+        System.out.println("Enter Ending Column:");
+        int ecol = scnr.nextInt();
+        out.println(MoveRequest.toJSON(new MoveRequest(srow,scol,erow,ecol)));
         return MoveResponse.fromJSON(in.readLine());
     }
 
@@ -44,8 +57,12 @@ public class Client {
         Client client = new Client();
         try {
             client.startConnection("127.0.0.1", 4444);
+            //GameDisplay board = new GameDisplay();
+            //board.getGameDisplay();
+        while(true) {
             System.out.println(client.sendRequest().toString());
-            client.stopConnection();
+        }
+            //client.stopConnection();
         } catch(Exception e) {
             e.printStackTrace();
         }

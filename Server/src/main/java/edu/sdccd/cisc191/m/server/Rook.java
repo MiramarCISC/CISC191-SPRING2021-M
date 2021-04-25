@@ -12,9 +12,8 @@ public class Rook extends Pieces {
 
     //
     @Override
-    public boolean getLegalMoves(Board board, Square start, Square end) {
+    public boolean validateMove(Board board, Square start, Square end) {
 
-        boolean check;
         if (end.getPiece().toString().equals("Blank")) {
 
             if (Math.abs(start.getRow() - end.getRow()) > 0) { //Check vertically
@@ -125,7 +124,7 @@ public class Rook extends Pieces {
                     System.out.println("Break: Allied Piece");
                     return false;
                 }else
-                System.out.println("Attack");
+                System.out.println("Attack (Rook)");
                 return true;
             }
         }
