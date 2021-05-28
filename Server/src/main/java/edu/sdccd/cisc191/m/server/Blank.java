@@ -5,7 +5,8 @@ public class Blank extends Pieces {
     public Blank(boolean isWhite, boolean moved) {
         super(isWhite, moved);
     }
-    public Blank(){
+
+    public Blank() {
 
     }
 
@@ -14,7 +15,7 @@ public class Blank extends Pieces {
     }
 
     @Override
-    public boolean getLegalMoves(Board board, Square start, Square end) {
+    public boolean validateMove(Board board, Square start, Square end) {
         return false;
     }
 }

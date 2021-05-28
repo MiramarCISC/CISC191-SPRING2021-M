@@ -7,6 +7,7 @@ public class MoveResponse {
     boolean legal;
 
 
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static String toJSON(MoveResponse move) throws Exception {
@@ -17,12 +18,18 @@ public class MoveResponse {
         return objectMapper.readValue(input, MoveResponse.class);
 
     }
+    public static String promotionRequest(MoveResponse promote) throws Exception{
+        return objectMapper.writeValueAsString(promote);
+    }
 
     public MoveResponse(MoveRequest request,boolean legal) {
         this.request = request;
         this.legal = legal;
     }
 
+    public MoveResponse(MoveRequest request){
+        this.request = request;
+    }
     public MoveResponse() {
 
     }
@@ -33,7 +40,10 @@ public class MoveResponse {
         } else {
             return ("This Move from " + request.getSrow() + ","+ request.getScol()+ " to " + request.getErow()+","+request.getEcol() +" is not legal");
         }
+
     }
+
+
 
 
     public boolean isLegal() {
