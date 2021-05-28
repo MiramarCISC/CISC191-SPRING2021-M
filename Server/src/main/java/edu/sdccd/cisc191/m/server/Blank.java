@@ -14,7 +14,7 @@ public class Blank extends Pieces {
     }
 
     @Override
-    public boolean getLegalMoves(Board board, Square start, Square end) {
+    public boolean validateMove(Board board, Square start, Square end) {
         return false;
     }
 }

@@ -12,14 +12,17 @@ public abstract class Pieces {
 
     }
 
-    public abstract boolean getLegalMoves(Board board, Square start, Square end);
+    public abstract boolean validateMove(Board board, Square start, Square end);
 
     public abstract String toString();
 
 
-    public boolean hasMoved(Board board, Square start, Square end) {
+    public boolean hasMoved() {
         return moved;
 
+    }
+    public void setMoved(boolean moved){
+        this.moved = moved;
     }
 
     public boolean isWhite() {

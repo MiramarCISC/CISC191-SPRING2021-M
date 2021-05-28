@@ -3,31 +3,94 @@ package edu.sdccd.cisc191.m;
 import java.net.*;
 import java.io.*;
 
+
+
+
 public class Player {
     boolean isWhite;
-    private ClientSideConnection csc;
 
-    public void makeMove() {
-    }
-    public void connectToServer(){
-        csc = new ClientSideConnection();
-    }
-    private class ClientSideConnection{
-        private Socket socket;
-        private DataInputStream dataIn;
-        private DataOutputStream dataOut;
-        public ClientSideConnection(){
-            System.out.println("Client");
-            try{
-                socket = new Socket("localhost", 33333);
-                dataIn = new DataInputStream(socket.getInputStream());
-                dataOut = new DataOutputStream(socket.getOutputStream());
-            }catch (IOException ex){
-                System.out.println("IO Exception from CSC constructor");
-            }
-        }
-    }
-    public static void main(String[] args){
 
+    long id;
+    String userName;
+    int wins;
+    int losses;
+    int draws;
+
+
+    public Player(long ID, String userName, int wins, int losses, int draws) {
+
+        this.userName = userName;
+        this.wins = wins;
+        this.losses = losses;
+        this.draws = draws;
     }
+
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "isWhite=" + isWhite +
+                ", ID=" + id +
+                ", Username='" + userName + '\'' +
+                ", wins=" + wins +
+                ", losses=" + losses +
+                ", draws=" + draws +
+                '}';
+    }
+
+    public Player(){
+    }
+
+    public Player(boolean isWhite){
+        this.isWhite = isWhite;
+    }
+
+    public long getID() {
+        return id;
+    }
+
+    public void setID(long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public void setUsername(String userName) {
+        this.userName = userName;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public int getDraws() {
+        return draws;
+    }
+
+    public void setDraws(int draws) {
+        this.draws = draws;
+    }
+
+    public boolean isWhite() {
+        return isWhite;
+    }
+
+    public void setWhite(boolean white) {
+        isWhite = white;
+    }
+
 }
