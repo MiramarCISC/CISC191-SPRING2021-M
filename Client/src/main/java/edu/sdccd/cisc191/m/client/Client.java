@@ -7,20 +7,10 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * This program opens a connection to a computer specified
- * as the first command-line argument.  If no command-line
- * argument is given, it prompts the user for a computer
- * to connect to.  The connection is made to
- * the port specified by LISTENING_PORT.  The program reads one
- * line of text from the connection and then closes the
- * connection.  It displays the text that it read on
- * standard output.  This program is meant to be used with
- * the server program, GameServer, which sends a move request
- * to the computer where the server is running.
  *
  * Make sure you select the file path for the chess.img in the GameView class!
  * Make sure you allow multiple instances of the client to run!
- * The true board is in the GameServer
+ * The true board is in the GameServer!
  *
  */
 
