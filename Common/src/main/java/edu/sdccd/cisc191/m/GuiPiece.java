@@ -3,20 +3,20 @@ package edu.sdccd.cisc191.m;
 import java.util.LinkedList;
 
 
-public class Piece {
+public class GuiPiece {
     int xp;
     int yp;
 
     int x;
     int y;
     boolean isWhite;
-    LinkedList<Piece> ps;
+    LinkedList<GuiPiece> ps;
     String name;
 
     boolean moved;
 
 
-    public Piece(int xp, int yp, boolean isWhite, boolean moved, String name, LinkedList<Piece> ps) {
+    public GuiPiece(int xp, int yp, boolean isWhite, boolean moved, String name, LinkedList<GuiPiece> ps) {
         this.xp = xp;
         this.yp = yp;
         x = xp * 64;

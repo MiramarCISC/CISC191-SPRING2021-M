@@ -14,7 +14,7 @@ public class GameView {
 
     JFrame frame;
 
-    public static LinkedList<Piece> ps = new LinkedList<>();
+    public static LinkedList<GuiPiece> ps = new LinkedList<>();
 
     public GameView() throws IOException {
 
@@ -31,39 +31,39 @@ public class GameView {
         }
 
         //paints all the pieces on the GUI Chess Board
-        Piece wR = new Piece(0, 0, true, false, "Rook", ps);
-        Piece wN = new Piece(1, 0, true, false, "Knight", ps);
-        Piece wB = new Piece(2, 0, true, false, "Bishop", ps);
-        Piece wK = new Piece(3, 0, true, false, "King", ps);
-        Piece wQ = new Piece(4, 0, true, false, "Queen", ps);
-        Piece wB2 = new Piece(5, 0, true, false, "Bishop", ps);
-        Piece wN2 = new Piece(6, 0, true, false, "Knight", ps);
-        Piece wR2 = new Piece(7, 0, true, false, "Rook", ps);
-        Piece wP = new Piece(0, 1, true, false, "Pawn", ps);
-        Piece wP2 = new Piece(1, 1, true, false, "Pawn", ps);
-        Piece wP3 = new Piece(2, 1, true, false, "Pawn", ps);
-        Piece wP4 = new Piece(3, 1, true, false, "Pawn", ps);
-        Piece wP5 = new Piece(4, 1, true, false, "Pawn", ps);
-        Piece wp6 = new Piece(5, 1, true, false, "Pawn", ps);
-        Piece wp7 = new Piece(6, 1, true, false, "Pawn", ps);
-        Piece wp8 = new Piece(7, 1, true, false, "Pawn", ps);
+        GuiPiece wR = new GuiPiece(0, 0, true, false, "Rook", ps);
+        GuiPiece wN = new GuiPiece(1, 0, true, false, "Knight", ps);
+        GuiPiece wB = new GuiPiece(2, 0, true, false, "Bishop", ps);
+        GuiPiece wK = new GuiPiece(3, 0, true, false, "King", ps);
+        GuiPiece wQ = new GuiPiece(4, 0, true, false, "Queen", ps);
+        GuiPiece wB2 = new GuiPiece(5, 0, true, false, "Bishop", ps);
+        GuiPiece wN2 = new GuiPiece(6, 0, true, false, "Knight", ps);
+        GuiPiece wR2 = new GuiPiece(7, 0, true, false, "Rook", ps);
+        GuiPiece wP = new GuiPiece(0, 1, true, false, "Pawn", ps);
+        GuiPiece wP2 = new GuiPiece(1, 1, true, false, "Pawn", ps);
+        GuiPiece wP3 = new GuiPiece(2, 1, true, false, "Pawn", ps);
+        GuiPiece wP4 = new GuiPiece(3, 1, true, false, "Pawn", ps);
+        GuiPiece wP5 = new GuiPiece(4, 1, true, false, "Pawn", ps);
+        GuiPiece wp6 = new GuiPiece(5, 1, true, false, "Pawn", ps);
+        GuiPiece wp7 = new GuiPiece(6, 1, true, false, "Pawn", ps);
+        GuiPiece wp8 = new GuiPiece(7, 1, true, false, "Pawn", ps);
 
-        Piece bR = new Piece(0, 7, false, false, "Rook", ps);
-        Piece bN = new Piece(1, 7, false, false, "Knight", ps);
-        Piece bB = new Piece(2, 7, false, false, "Bishop", ps);
-        Piece bK = new Piece(3, 7, false, false, "King", ps);
-        Piece bQ = new Piece(4, 7, false, false, "Queen", ps);
-        Piece bB2 = new Piece(5, 7, false, false, "Bishop", ps);
-        Piece bN2 = new Piece(6, 7, false, false, "Knight", ps);
-        Piece bR2 = new Piece(7, 7, false, false, "Rook", ps);
-        Piece bP = new Piece(0, 6, false, false, "Pawn", ps);
-        Piece bP2 = new Piece(1, 6, false, false, "Pawn", ps);
-        Piece bP3 = new Piece(2, 6, false, false, "Pawn", ps);
-        Piece bP4 = new Piece(3, 6, false, false, "Pawn", ps);
-        Piece bP5 = new Piece(4, 6, false, false, "Pawn", ps);
-        Piece bp6 = new Piece(5, 6, false, false, "Pawn", ps);
-        Piece bp7 = new Piece(6, 6, false, false, "Pawn", ps);
-        Piece bp8 = new Piece(7, 6, false, false, "Pawn", ps);
+        GuiPiece bR = new GuiPiece(0, 7, false, false, "Rook", ps);
+        GuiPiece bN = new GuiPiece(1, 7, false, false, "Knight", ps);
+        GuiPiece bB = new GuiPiece(2, 7, false, false, "Bishop", ps);
+        GuiPiece bK = new GuiPiece(3, 7, false, false, "King", ps);
+        GuiPiece bQ = new GuiPiece(4, 7, false, false, "Queen", ps);
+        GuiPiece bB2 = new GuiPiece(5, 7, false, false, "Bishop", ps);
+        GuiPiece bN2 = new GuiPiece(6, 7, false, false, "Knight", ps);
+        GuiPiece bR2 = new GuiPiece(7, 7, false, false, "Rook", ps);
+        GuiPiece bP = new GuiPiece(0, 6, false, false, "Pawn", ps);
+        GuiPiece bP2 = new GuiPiece(1, 6, false, false, "Pawn", ps);
+        GuiPiece bP3 = new GuiPiece(2, 6, false, false, "Pawn", ps);
+        GuiPiece bP4 = new GuiPiece(3, 6, false, false, "Pawn", ps);
+        GuiPiece bP5 = new GuiPiece(4, 6, false, false, "Pawn", ps);
+        GuiPiece bp6 = new GuiPiece(5, 6, false, false, "Pawn", ps);
+        GuiPiece bp7 = new GuiPiece(6, 6, false, false, "Pawn", ps);
+        GuiPiece bp8 = new GuiPiece(7, 6, false, false, "Pawn", ps);
 
 
 
@@ -88,7 +88,7 @@ public class GameView {
                     }
                     white = !white;
                 }
-                for (Piece p : ps) {
+                for (GuiPiece p : ps) {
                     int ind = 0;
                     if (p.name.equalsIgnoreCase("king")) {
                         ind = 0;
@@ -129,9 +129,9 @@ public class GameView {
     }
 
 
-    public static Piece getPiece(int x, int y) {
+    public static GuiPiece getPiece(int x, int y) {
 
-        for (Piece p : ps) {
+        for (GuiPiece p : ps) {
             if (p.xp == x && p.yp == y) {
                 return p;
             }

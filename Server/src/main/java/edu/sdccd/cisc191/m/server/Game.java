@@ -79,7 +79,6 @@ public class Game {
                             && board2.getSquare(r, c).getPiece().toString() != "King"
                             && board2.getSquare(r, c).getPiece().validateMove(board2, board2.getSquare(r, c), temp)) {
                         //check if move results in King being checked on alternate board
-                        System.out.println("Move results in King being Checked");
 
                         check = true;
 
