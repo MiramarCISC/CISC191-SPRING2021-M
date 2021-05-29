@@ -2,6 +2,11 @@ package edu.sdccd.cisc191.m;
 
 import java.util.LinkedList;
 
+/**
+ * Author(s): Austin Nguyen
+ * Description: This class makes up the GUI for the all the pieces on the board. It also allows the pieces to
+ * move on the GUI board.
+ */
 
 public class GuiPiece {
     int xp;

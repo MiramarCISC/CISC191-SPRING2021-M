@@ -1,5 +1,11 @@
 package edu.sdccd.cisc191.m.server;
 
+/**
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: The code the makes up the Queen object.
+ * Is primarily used to calculate a valid move of the piece
+ */
+
 public class Queen extends Pieces {
 
     public Queen(boolean isWhite, boolean moved) {

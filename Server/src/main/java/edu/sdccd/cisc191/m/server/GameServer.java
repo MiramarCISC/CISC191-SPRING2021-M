@@ -16,8 +16,8 @@ import java.util.LinkedList;
  */
 
 
-
 public class GameServer {
+
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private Socket clientSocket2;
@@ -112,7 +112,6 @@ public class GameServer {
 
 
                     System.out.println();
-
 
 
                     if (turns % 2 == 0) {//sets next turn

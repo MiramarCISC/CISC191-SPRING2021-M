@@ -1,5 +1,9 @@
 package edu.sdccd.cisc191.m.server;
-
+/**
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: The object that holds square classes in a 2d array to display the board
+ * and move objects. The main body of the game.
+ */
 
 import java.util.LinkedList;
 
@@ -8,7 +12,7 @@ public class Board {
     private final Square[][] board;
     private final LinkedList<Square> boardPosition;
 
-    public Board(){
+    public Board() {
 
         board = new Square[8][8];
         boardPosition = new LinkedList<Square>();
@@ -27,14 +31,14 @@ public class Board {
         board[0][5] = new Square(0, 5, new Bishop(true, false));
         board[0][6] = new Square(0, 6, new Knight(true, false));
         board[0][7] = new Square(0, 7, new Rook(true, false));
-        board[1][0] = new Square(1, 0, new Pawn(true,false));
-        board[1][1] = new Square(1, 1, new Pawn(true,false));
-        board[1][2] = new Square(1, 2, new Pawn(true,false));
-        board[1][3] = new Square(1, 3, new Pawn(true,false));
-        board[1][4] = new Square(1, 4, new Pawn(true,false));
-        board[1][5] = new Square(1, 5, new Pawn(true,false));
-        board[1][6] = new Square(1, 6, new Pawn(true,false));
-        board[1][7] = new Square(1, 7, new Pawn(true,false));
+        board[1][0] = new Square(1, 0, new Pawn(true, false));
+        board[1][1] = new Square(1, 1, new Pawn(true, false));
+        board[1][2] = new Square(1, 2, new Pawn(true, false));
+        board[1][3] = new Square(1, 3, new Pawn(true, false));
+        board[1][4] = new Square(1, 4, new Pawn(true, false));
+        board[1][5] = new Square(1, 5, new Pawn(true, false));
+        board[1][6] = new Square(1, 6, new Pawn(true, false));
+        board[1][7] = new Square(1, 7, new Pawn(true, false));
 
         for (int r = 2; r < 6; r++) {
             for (int c = 0; c < 8; c++) {
@@ -50,36 +54,36 @@ public class Board {
         board[7][5] = new Square(7, 5, new Bishop(false, false));
         board[7][6] = new Square(7, 6, new Knight(false, false));
         board[7][7] = new Square(7, 7, new Rook(false, false));
-        board[6][0] = new Square(6, 0, new Pawn(false,false));
-        board[6][1] = new Square(6, 1, new Pawn(false,false));
-        board[6][2] = new Square(6, 2, new Pawn(false,false));
-        board[6][3] = new Square(6, 3, new Pawn(false,false));
-        board[6][4] = new Square(6, 4, new Pawn(false,false));
-        board[6][5] = new Square(6, 5, new Pawn(false,false));
-        board[6][6] = new Square(6, 6, new Pawn(false,false));
-        board[6][7] = new Square(6, 7, new Pawn(false,false));
+        board[6][0] = new Square(6, 0, new Pawn(false, false));
+        board[6][1] = new Square(6, 1, new Pawn(false, false));
+        board[6][2] = new Square(6, 2, new Pawn(false, false));
+        board[6][3] = new Square(6, 3, new Pawn(false, false));
+        board[6][4] = new Square(6, 4, new Pawn(false, false));
+        board[6][5] = new Square(6, 5, new Pawn(false, false));
+        board[6][6] = new Square(6, 6, new Pawn(false, false));
+        board[6][7] = new Square(6, 7, new Pawn(false, false));
 
 
     }
 
     //sets a position of the board to what was held in the Linked list. Used to swap Pieces.
-    public void setBoard(LinkedList<Square>bp, int srow, int scol, int erow, int ecol, int spIndex, int epIndex){
+    public void setBoard(LinkedList<Square> bp, int srow, int scol, int erow, int ecol, int spIndex, int epIndex) {
         board[srow][scol] = bp.get(spIndex);
-        board[erow][ecol]= bp.get(epIndex);
+        board[erow][ecol] = bp.get(epIndex);
 
     }
 
     // a list that hold all the squares on the baord
-    public void setList(){
-        for(int r = 0; r < board.length;r++){
-            for(int c = 0; c< board[r].length;c++){
+    public void setList() {
+        for (int r = 0; r < board.length; r++) {
+            for (int c = 0; c < board[r].length; c++) {
                 boardPosition.add(board[r][c]);
             }
         }
     }
 
 
-    public LinkedList<Square> getList(){
+    public LinkedList<Square> getList() {
         return boardPosition;
     }
 
@@ -96,7 +100,7 @@ public class Board {
     public void displayBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < (board[0].length); j++) {
-                System.out.printf("%-16s at %d, %d   " ,"This is a "+ board[i][j].getPiece(),(i),(j));
+                System.out.printf("%-16s at %d, %d   ", "This is a " + board[i][j].getPiece(), (i), (j));
 
             }
             System.out.println();
@@ -108,24 +112,20 @@ public class Board {
     }
 
     //Moves the piee to a specific square
-    public void swapSquares(Square start, Square end){
+    public void swapSquares(Square start, Square end) {
 
 
         Square temp = start;
-        board[start.getRow()][start.getColumn()] = new Square(start.getRow(),start.getColumn(),new Blank());
+        board[start.getRow()][start.getColumn()] = new Square(start.getRow(), start.getColumn(), new Blank());
         board[end.getRow()][end.getColumn()].setPiece(temp.getPiece());
-
 
 
     }
 
     //sets a square to the another square inside the board.
-    public void setSquare(Square change, Square newPiece){
+    public void setSquare(Square change, Square newPiece) {
         board[change.getRow()][change.getColumn()] = newPiece;
     }
-
-
-
 
 
 }

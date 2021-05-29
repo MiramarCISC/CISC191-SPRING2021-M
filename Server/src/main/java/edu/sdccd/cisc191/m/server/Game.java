@@ -2,6 +2,11 @@ package edu.sdccd.cisc191.m.server;
 
 import edu.sdccd.cisc191.m.Player;
 
+/**
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: This class handles all of the games logic for chess including
+ * if one's king is checked, one is checkmated, or they are stalemated.
+ */
 
 public class Game {
 

@@ -1,5 +1,11 @@
 package edu.sdccd.cisc191.m.server;
 
+/**
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: The code the makes up the Bishop object.
+ * Is primarily used to calculate a valid move of the piece
+ */
+
 public class Bishop extends Pieces {
     public Bishop(boolean isWhite, boolean moved) {
         super(isWhite, moved);

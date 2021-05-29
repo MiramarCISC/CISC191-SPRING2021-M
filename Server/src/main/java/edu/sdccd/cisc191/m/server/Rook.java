@@ -1,5 +1,11 @@
 package edu.sdccd.cisc191.m.server;
 
+/**
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: The code the makes up the Rook object.
+ * Is primarily used to calculate a valid move of the piece
+ */
+
 public class Rook extends Pieces {
     public Rook(boolean isWhite, boolean moved) {
         super(isWhite, moved);
@@ -102,17 +108,14 @@ public class Rook extends Pieces {
                     }
                 }
             }
-            if(end.getPiece().isWhite()==start.getPiece().isWhite()){
+            if (end.getPiece().isWhite() == start.getPiece().isWhite()) {
 
                 return false;
-            }else
+            } else
 
                 return true;
         }
     }
-
-
-
 
 
 }

@@ -9,6 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
+/**
+ * Author(s): Austin Nguyen
+ * Description: The Graphic User Interface (GUI) of the Chess game. This class paints the board and all the pieces
+ * in a frame.
+ * Ensure that the correct file path is inputted in line 27 for the chess.png
+ */
 
 public class GameView {
 

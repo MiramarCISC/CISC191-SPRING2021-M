@@ -2,6 +2,12 @@ package edu.sdccd.cisc191.m.server;
 
 import edu.sdccd.cisc191.m.Player;
 
+/**
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: The code the makes up the King object.
+ * Is primarily used to calculate a valid move of the piece
+ */
+
 public class King extends Pieces {
     public King(boolean isWhite, boolean moved) {
         super(isWhite, moved);
