@@ -1,7 +1,7 @@
 package edu.sdccd.cisc191.m.server;
 
 /**
- * Author(s): Aiden Wise, Austin Nguyen
+ * Author(s): Corey Hall
  * Description: This is the abstract class that is the main structure for all the pieces
  */
 

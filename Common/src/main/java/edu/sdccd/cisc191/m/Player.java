@@ -1,7 +1,7 @@
 package edu.sdccd.cisc191.m;
 
 /**
- * Author(s): Aiden Wise
+ * Author(s): Mbuva Mpore-Carter
  * Description: Players class was initially going to be used for accounts
  * with databases however it now only determines which player is what color.
  */
