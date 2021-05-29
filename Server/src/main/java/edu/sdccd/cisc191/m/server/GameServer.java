@@ -10,15 +10,11 @@ import java.util.LinkedList;
 
 
 /**
- * This program is a server that takes connection requests on
- * the port specified by the constant LISTENING_PORT.  When a
- * connection is opened, the program sends the current time to
- * the connected socket.  The program will continue to receive
- * and process connections until it is killed (by a CONTROL-C,
- * for example).  Note that this server processes each connection
- * as it is received, rather than creating a separate thread
- * to process the connection.
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: This program is a server that processes the move requests from 2 clients and determines
+ * whether the move is legal or not according to the game logic of the game.
  */
+
 
 
 public class GameServer {
@@ -315,11 +311,9 @@ public class GameServer {
                 board.displayBoard();
             }
 
-            MoveResponse response = new MoveResponse(request, legal);
-
+            MoveResponse response = new MoveResponse(request, legal, turn);
 
             out.println(MoveResponse.toJSON(response));
-
 
             if (legal && logic.stalemate(board, hold)) {
                 if (turn.equals("black")) {

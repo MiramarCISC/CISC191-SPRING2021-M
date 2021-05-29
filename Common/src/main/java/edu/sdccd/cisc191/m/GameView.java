@@ -66,7 +66,6 @@ public class GameView {
         GuiPiece bp8 = new GuiPiece(7, 6, false, false, "Pawn", ps);
 
 
-
         frame = new JFrame();
         frame.setBounds(10, 10, 512, 512);
         //frame.setUndecorated(true);

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class MoveResponse {
     MoveRequest request;
     boolean legal;
+    String turn;
 
 
 
@@ -22,9 +23,10 @@ public class MoveResponse {
         return objectMapper.writeValueAsString(promote);
     }
 
-    public MoveResponse(MoveRequest request,boolean legal) {
+    public MoveResponse(MoveRequest request, boolean legal, String turn) {
         this.request = request;
         this.legal = legal;
+        this.turn = turn;
     }
 
     public MoveResponse(MoveRequest request){
@@ -61,4 +63,13 @@ public class MoveResponse {
     public void setRequest(MoveRequest request) {
         this.request = request;
     }
+
+    public String getTurn() {
+        return turn;
+    }
+
+    public void setTurn(String turn) {
+        this.turn = turn;
+    }
+
 }

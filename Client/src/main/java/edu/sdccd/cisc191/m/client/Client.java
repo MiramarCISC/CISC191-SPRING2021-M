@@ -7,11 +7,11 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- *
- * Make sure you select the file path for the chess.img in the GameView class!
- * Make sure you allow multiple instances of the client to run!
- * The true board is in the GameServer!
- *
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: Requests a move from a user which is then sent to the Server to be proccessed.
+ * The server then responds telling the user if the move was valid or not.
+ * Make sure you allow multiple instances of the client to run to be able to test two players!
+ * Only two clients can be running at the same time
  */
 
 public class Client {
@@ -24,11 +24,11 @@ public class Client {
     private static int scol;
     private static int erow;
     private static int ecol;
+    private static MoveResponse respond;
+
 
     public Client() {
         scnr = new Scanner(System.in);
-
-
     }
 
     public void startConnection(String ip, int port) throws IOException {
@@ -36,6 +36,7 @@ public class Client {
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
+
 
     public static MoveResponse sendRequest() throws Exception {
 
@@ -51,10 +52,18 @@ public class Client {
 
 
         out.println(MoveRequest.toJSON(new MoveRequest(srow, scol, erow, ecol)));
-        return MoveResponse.fromJSON(in.readLine());
+        respond = MoveResponse.fromJSON(in.readLine());
+
+
+        return respond;
 
 
     }
+
+    public static MoveResponse getResponse() {
+        return respond;
+    }
+
 
     public void stopConnection() throws IOException {
         in.close();
@@ -67,19 +76,25 @@ public class Client {
 
         try {
             client.startConnection("127.0.0.1", 4444);
-            String response;
 
             gameView = new GameView();
 
 
             while (true) {
 
-                MoveResponse requests = client.sendRequest();
+                client.sendRequest();
 
-                response = requests.toString();
+                System.out.println(respond.toString());
 
-                System.out.println(response);
-                if (response.contains("is legal")) {
+
+                int srow = client.getResponse().getRequest().getSrow();
+                int scol = client.getResponse().getRequest().getScol();
+
+                int erow = client.getResponse().getRequest().getErow();
+                int ecol = client.getResponse().getRequest().getEcol();
+
+
+                if (respond.toString().contains("is legal")) {
                     assert gameView.getPiece(scol, srow) != null;
                     if (gameView.getPiece(scol, srow).getName().equalsIgnoreCase("king")
                             && gameView.getPiece(scol, srow).hasMoved() == false
@@ -105,11 +120,12 @@ public class Client {
                         gameView.getPiece(ecol, erow).setMoved(true);
                         gameView.paint();
                     }
+
+
                 }
 
 
             }
-
 
 
         } catch (Exception e) {

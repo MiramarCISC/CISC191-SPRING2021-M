@@ -4,6 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 
+/**
+ * Author(s): Aiden Wise
+ * Description: Converts the input from Client into JSON
+ * and sends it to the GameSever
+ */
+
+
 public class MoveRequest {
 
     private int srow;

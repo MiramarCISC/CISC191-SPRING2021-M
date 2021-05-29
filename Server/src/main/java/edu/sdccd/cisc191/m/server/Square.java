@@ -1,5 +1,12 @@
 package edu.sdccd.cisc191.m.server;
 
+/**
+ * Author(s): Aiden Wise, Austin Nguyen
+ * Description: The blocks that make up the board. Each square contains a piece and
+ * the pieces location on the board.
+ */
+
+
 public class Square {
     private int row;
     private int column;
