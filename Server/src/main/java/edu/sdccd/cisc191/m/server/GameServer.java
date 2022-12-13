@@ -6,6 +6,7 @@ import edu.sdccd.cisc191.m.*;
 import java.net.*;
 import java.io.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -17,41 +18,54 @@ import java.util.LinkedList;
 
 
 public class GameServer {
-
+    //sockets
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private Socket clientSocket2;
+
+    //send out to client
     private PrintWriter out;
+
+    //read input from client
     private BufferedReader in;
-    private LinkedList<Board> boardStates = new LinkedList<Board>();
-    private LinkedList<Square> boardPosition = new LinkedList<Square>();
+
+    //game states in arrays
+    private ArrayList<Board> boardStates = new ArrayList<>();
+    private ArrayList<Square> boardPosition = new ArrayList<>();
+
+    //gameover
     private static GameServer server;
 
-
+    //constructor
     public GameServer() {
 
     }
 
+    //start server given port
     public void start(int port) throws Exception {
+
+        //setting up server socket
         serverSocket = new ServerSocket(port);
 
 
         System.out.println("Waiting for connections...");
 
-
+        //accepting client1 and client2
         clientSocket = serverSocket.accept();
         clientSocket2 = serverSocket.accept();
 
 
         System.out.println("We now have 2 players. No longer accepting connections.");
 
-
+        //**** CLIENT 1 ****
+        //outputting into client
         out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+        //inputting to client
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-
+        //variables
         String inputLine;
-
         boolean legal;
         Board board = new Board();
         board.resetBoard();
@@ -66,18 +80,19 @@ public class GameServer {
 
         Player player1 = new Player(true);
         Player player2 = new Player(false);
+        // change turns
         Player hold = player1;
-
 
         while (true) {
 
+            //read info from input
             inputLine = in.readLine();
-
-
             System.out.println(inputLine);
 
+            //requested move
             MoveRequest request = MoveRequest.fromJSON(inputLine);
 
+            //store moves
             srow = request.getSrow();
             scol = request.getScol();
             erow = request.getErow();
@@ -88,7 +103,7 @@ public class GameServer {
             System.out.println(erow);
             System.out.println(ecol);
 
-
+            //if white change booleans
             boolean isWhite;
 
             if (turn.equals("white")) {
@@ -98,7 +113,7 @@ public class GameServer {
             }
 
 
-            //check if the move is within the boundaries of the board
+            //check if the move is within the boundaries of the board and if the piece is the correct color
             if (((srow < 8 && srow > -1) && (scol < 8 && scol > -1) && (erow < 8 && erow > -1) && (ecol < 8 && ecol > -1))
                     && (board.getSquare(srow, scol).getPiece().isWhite() == isWhite)) {
 
@@ -310,10 +325,13 @@ public class GameServer {
                 board.displayBoard();
             }
 
+            //response to the move
             MoveResponse response = new MoveResponse(request, legal, turn);
-
+            //Send move to client 1
             out.println(MoveResponse.toJSON(response));
 
+
+            //checks for white end game
             if (legal && logic.stalemate(board, hold)) {
                 if (turn.equals("black")) {
                     System.out.println("Black is Stalemated");
@@ -358,9 +376,10 @@ public class GameServer {
                 }
             }
 
+            //next players turn
             System.out.println(turn + " has the next turn");
 
-
+            //if next turn is white change the out and in to read from client1
             if (turn.equals("white") && legal) {
 
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -369,7 +388,7 @@ public class GameServer {
 
                 hold = player2;
 
-
+            //if next turn is black change the out and in to read from client2
             } else if (turn.equals("black") && legal) {
 
                 out = new PrintWriter(clientSocket2.getOutputStream(), true);
@@ -382,7 +401,7 @@ public class GameServer {
 
         }
     }
-
+    // exceptions
     public void stop() throws IOException {
 
         in.close();

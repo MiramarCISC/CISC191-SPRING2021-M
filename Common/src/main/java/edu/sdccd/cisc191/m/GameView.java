@@ -24,7 +24,7 @@ public class GameView {
 
     public GameView() throws IOException {
 
-        BufferedImage all = ImageIO.read(new File("D:\\Users\\Aiden Wise\\IdeaProjects\\CISC191-SPRING2021-M\\chess.png"));
+        BufferedImage all = ImageIO.read(new File("C:\\Users\\Aiden Wise\\Documents\\GitHub\\Online-Chess-Code\\chess.png"));
 
         Image imgs[] = new Image[12];
         int ind = 0;

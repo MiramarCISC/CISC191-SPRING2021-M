@@ -5,17 +5,18 @@ package edu.sdccd.cisc191.m.server;
  * and move objects. The main body of the game.
  */
 
-import java.util.LinkedList;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Board {
 
     private final Square[][] board;
-    private final LinkedList<Square> boardPosition;
+    private final ArrayList<Square> boardPosition;
 
     public Board() {
 
         board = new Square[8][8];
-        boardPosition = new LinkedList<Square>();
+        boardPosition = new ArrayList<Square>();
 
     }
 
@@ -67,7 +68,7 @@ public class Board {
     }
 
     //sets a position of the board to what was held in the Linked list. Used to swap Pieces.
-    public void setBoard(LinkedList<Square> bp, int srow, int scol, int erow, int ecol, int spIndex, int epIndex) {
+    public void setBoard(ArrayList<Square> bp, int srow, int scol, int erow, int ecol, int spIndex, int epIndex) {
         board[srow][scol] = bp.get(spIndex);
         board[erow][ecol] = bp.get(epIndex);
 
@@ -83,7 +84,7 @@ public class Board {
     }
 
 
-    public LinkedList<Square> getList() {
+    public ArrayList<Square> getList() {
         return boardPosition;
     }
 
