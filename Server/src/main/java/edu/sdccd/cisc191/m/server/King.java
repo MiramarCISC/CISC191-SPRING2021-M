@@ -20,13 +20,13 @@ public class King extends Pieces {
 
     @Override
     public boolean validateMove(Board board, Square start, Square end) {
-        Game logic = new Game();
-        Player color = new Player();
+        EndState logic = new EndState();
+        String color = "white";
 
         if (isWhite()) {
-            color.setWhite(false);
+            color = "black";
         } else {
-            color.setWhite(true);
+            color = "white";
         }
 
         if (end.getPiece().isWhite() == start.getPiece().isWhite() && end.getPiece().toString() != "Blank") { //checks if there is a piece of the same color in end pos

@@ -47,7 +47,7 @@ public class MoveResponse {
 
     public String toString() {
         if (legal) {
-            return ("This Move from " + request.getSrow() + "," + request.getScol() + " to " + request.getErow() + "," + request.getEcol() + " is legal");
+            return ("This Move from " + request.getSrow() + "," + request.getScol() + " to " + request.getErow() + "," + request.getEcol() + " is legal." + "The turn is " + turn);
         } else {
             return ("This Move from " + request.getSrow() + "," + request.getScol() + " to " + request.getErow() + "," + request.getEcol() + " is not legal");
         }

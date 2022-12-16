@@ -8,15 +8,15 @@ import edu.sdccd.cisc191.m.Player;
  * if one's king is checked, one is checkmated, or they are stalemated.
  */
 
-public class Game {
+public class EndState {
 
 
-    public Game() {
+    public EndState() {
 
     }
 
     //check if a player's next move results in their king being checked
-    public boolean isChecked(Board board, Player player, Square start, Square end) {
+    public static boolean isChecked(Board board, String turn, Square start, Square end) {
         boolean check = false;
         Square temp = null;
 
@@ -31,7 +31,7 @@ public class Game {
 
             for (int r = 0; r < 8; r++) {
                 for (int c = 0; c < 8; c++) {
-                    if ("King" == board2.getSquare(r, c).getPiece().toString() && player.isWhite() != board2.getSquare(r, c).getPiece().isWhite()) {
+                    if ("King" == board2.getSquare(r, c).getPiece().toString() && turn=="white" != board2.getSquare(r, c).getPiece().isWhite()) {
                         temp = board2.getSquare(r, c);
 
 
@@ -69,7 +69,7 @@ public class Game {
 
             for (int r = 0; r < 8; r++) {
                 for (int c = 0; c < 8; c++) {
-                    if ("King" == board2.getSquare(r, c).getPiece().toString() && player.isWhite() != board2.getSquare(r, c).getPiece().isWhite()) {
+                    if ("King" == board2.getSquare(r, c).getPiece().toString() && turn=="white" != board2.getSquare(r, c).getPiece().isWhite()) {
                         temp = board2.getSquare(r, c);
 
                     }
@@ -103,7 +103,7 @@ public class Game {
 
     //Check if the king has been checkmated by searching for all the valid moves. If there are no valid moves, then
     //it is a checkmate
-    public boolean isCheckmated(Board board, Player player) {
+    public static boolean isCheckmated(Board board, String turn) {
 
         Square king = null;
         boolean checkmate = false;
@@ -111,7 +111,7 @@ public class Game {
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if ("King" == board.getSquare(r, c).getPiece().toString() && player.isWhite() == board.getSquare(r, c).getPiece().isWhite()) {
+                if ("King" == board.getSquare(r, c).getPiece().toString() && turn=="white" == board.getSquare(r, c).getPiece().isWhite()) {
                     king = board.getSquare(r, c);
 
                 }
@@ -121,12 +121,13 @@ public class Game {
         //Validating all moves for every piece
         //board.getSquare(r,c) is the selected Piece
         //board.getSquare(i,j) is ending square for the selected piece
-        Player tempP = new Player();
 
-        if (player.isWhite() == false) {
-            tempP.setWhite(true);
+        String otherTurn = "black";
+
+        if (turn=="black") {
+            otherTurn = "white";
         } else {
-            tempP.setWhite(false);
+            otherTurn = "black";
         }
 
         for (int r = 0; r < 8; r++) {
@@ -140,7 +141,7 @@ public class Game {
                             if (board.getSquare(r, c).getPiece().validateMove(board, board.getSquare(r, c), board.getSquare(i, j))) {
 
                                 //Checks if the move does not result in the piece being checked
-                                if (isChecked(board, tempP, board.getSquare(r, c), board.getSquare(i, j)) == false) {
+                                if (isChecked(board, otherTurn, board.getSquare(r, c), board.getSquare(i, j)) == false) {
 
                                     return false;
 
@@ -163,13 +164,13 @@ public class Game {
     }
 
     //Checks if the king is not checked and player has no valid moves
-    public boolean stalemate(Board board, Player player) {
+    public static boolean stalemate(Board board, String turn) {
 
         Square king = null;
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if ("King" == board.getSquare(r, c).getPiece().toString() && player.isWhite() != board.getSquare(r, c).getPiece().isWhite()) {
+                if ("King" == board.getSquare(r, c).getPiece().toString() && turn == "white" != board.getSquare(r, c).getPiece().isWhite()) {
                     king = board.getSquare(r, c);
 
                 }
@@ -177,12 +178,12 @@ public class Game {
         }
 
 
-        Player tempP = new Player();
+        String otherTurn = "black";
 
-        if (player.isWhite() == false) {
-            tempP.setWhite(true);
+        if (turn=="black") {
+            otherTurn = "white";
         } else {
-            tempP.setWhite(false);
+            otherTurn = "black";
         }
 
         for (int r = 0; r < 8; r++) {

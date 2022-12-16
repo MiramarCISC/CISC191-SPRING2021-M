@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  * Author(s): Aiden Wise, Austin Nguyen
- * Description: Requests a move from a user which is then sent to the Server to be proccessed.
+ * Description: Requests a move from a user which is then sent to the Server to be processed.
  * The server then responds telling the user if the move was valid or not.
  * Make sure you allow multiple instances of the client to run to be able to test two players!
  * Only two clients can be running at the same time
@@ -37,6 +37,9 @@ public class Client {
     //response from server
     private static MoveResponse respond;
 
+    //if its this turn
+    private static String turn;
+
 
     // constructor for client
     public Client() {
@@ -51,6 +54,7 @@ public class Client {
         clientSocket = new Socket(ip, port);
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        turn = in.readLine();
     }
 
     //sends a request for a move returns if response is valid
@@ -105,6 +109,35 @@ public class Client {
         out.close();
         clientSocket.close();
     }
+    public static void updateGUI(){
+        assert gameView.getPiece(scol, srow) != null;
+        if (gameView.getPiece(scol, srow).getName().equalsIgnoreCase("king")
+                && gameView.getPiece(scol, srow).hasMoved() == false
+                && gameView.getPiece(scol - 3, srow).getName().equalsIgnoreCase("rook")
+                && ecol == scol - 2) { //Paint for King side castling
+            gameView.getPiece(scol, srow).move(ecol, erow); //moves king on gui
+            gameView.getPiece(scol - 3, srow).move(scol - 1, srow); //moves rook on gui
+            gameView.getPiece(ecol, erow).setMoved(true);
+            gameView.getPiece(scol - 1, srow).setMoved(true);
+
+            gameView.paint();
+
+        } else if (gameView.getPiece(scol, srow).getName().equalsIgnoreCase("king")
+                && gameView.getPiece(scol, srow).hasMoved() == false && gameView.getPiece(scol + 4, srow).getName().equalsIgnoreCase("rook")
+                && ecol == scol + 2) { //paint for Queen side castling
+            gameView.getPiece(scol, srow).move(ecol, erow); //moves king on gui
+            gameView.getPiece(scol + 4, srow).move(scol + 1, srow); //moves rook on gui
+            gameView.getPiece(ecol, erow).setMoved(true);
+            gameView.getPiece(scol + 1, srow).setMoved(true);
+
+            gameView.paint();
+        } else { //paint for every other valid move
+            gameView.getPiece(scol, srow).move(ecol, erow); //moves piece on gui
+            gameView.getPiece(ecol, erow).setMoved(true);
+            gameView.paint();
+
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -118,65 +151,45 @@ public class Client {
             //creates game view
             gameView = new GameView();
 
+            // what turn am I
+            System.out.println(turn);
+
             //game loop
             //##### problem while true -- and working with alternating information between clients
             while (true) {
+                if (turn == "true") {
+                    //send --> move we want to make
 
-                //send --> move we want to make
+                    //listen --> for if valid
+                    // update gui to show our move
 
-                //listen --> for if valid
-                // update gui to show our move
-
-                //listen --> listen for other move
-                //update gui to show their move
+                    //listen --> listen for other move
+                    //update gui to show their move
 
 
-                //send
-                client.sendRequest();
+                    //send
+                    client.sendRequest();
 
-                System.out.println(respond.toString());
+                    System.out.println(respond.toString());
 
-                //getting input for move
-                int srow = client.getResponse().getRequest().getSrow();
-                int scol = client.getResponse().getRequest().getScol();
+                    //getting input for move
+                    srow = client.getResponse().getRequest().getSrow();
+                    scol = client.getResponse().getRequest().getScol();
 
-                int erow = client.getResponse().getRequest().getErow();
-                int ecol = client.getResponse().getRequest().getEcol();
+                    erow = client.getResponse().getRequest().getErow();
+                    ecol = client.getResponse().getRequest().getEcol();
 
-                //check if leagl move if king castle update gui if queen castle update gui else update gui
-                if (respond.toString().contains("is legal")) {
-                    assert gameView.getPiece(scol, srow) != null;
-                    if (gameView.getPiece(scol, srow).getName().equalsIgnoreCase("king")
-                            && gameView.getPiece(scol, srow).hasMoved() == false
-                            && gameView.getPiece(scol - 3, srow).getName().equalsIgnoreCase("rook")
-                            && ecol == scol - 2) { //Paint for King side castling
-                        gameView.getPiece(scol, srow).move(ecol, erow); //moves king on gui
-                        gameView.getPiece(scol - 3, srow).move(scol - 1, srow); //moves rook on gui
-                        gameView.getPiece(ecol, erow).setMoved(true);
-                        gameView.getPiece(scol - 1, srow).setMoved(true);
-
-                        gameView.paint();
-
-                    } else if (gameView.getPiece(scol, srow).getName().equalsIgnoreCase("king")
-                            && gameView.getPiece(scol, srow).hasMoved() == false && gameView.getPiece(scol + 4, srow).getName().equalsIgnoreCase("rook")
-                            && ecol == scol + 2) { //paint for Queen side castling
-                        gameView.getPiece(scol, srow).move(ecol, erow); //moves king on gui
-                        gameView.getPiece(scol + 4, srow).move(scol + 1, srow); //moves rook on gui
-                        gameView.getPiece(ecol, erow).setMoved(true);
-                        gameView.getPiece(scol + 1, srow).setMoved(true);
-
-                        gameView.paint();
-                    } else { //paint for every other valid move
-                        gameView.getPiece(scol, srow).move(ecol, erow); //moves piece on gui
-                        gameView.getPiece(ecol, erow).setMoved(true);
-                        gameView.paint();
+                    //check if leagl move if king castle update gui if queen castle update gui else update gui
+                    if (respond.toString().contains("is legal")) {
+                        updateGUI();
+                        turn = "false";
                     }
 
 
+                }else{
+                        updateGUI();
+                        turn = "true";
                 }
-
-
-
             }
 
 
