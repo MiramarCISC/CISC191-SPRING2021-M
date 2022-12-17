@@ -31,7 +31,7 @@ public class EndState {
 
             for (int r = 0; r < 8; r++) {
                 for (int c = 0; c < 8; c++) {
-                    if ("King" == board2.getSquare(r, c).getPiece().toString() && turn=="white" != board2.getSquare(r, c).getPiece().isWhite()) {
+                    if ("King" == board2.getSquare(r, c).getPiece().toString() && turn=="black" != board2.getSquare(r, c).getPiece().isWhite()) {
                         temp = board2.getSquare(r, c);
 
 
@@ -69,7 +69,7 @@ public class EndState {
 
             for (int r = 0; r < 8; r++) {
                 for (int c = 0; c < 8; c++) {
-                    if ("King" == board2.getSquare(r, c).getPiece().toString() && turn=="white" != board2.getSquare(r, c).getPiece().isWhite()) {
+                    if ("King" == board2.getSquare(r, c).getPiece().toString() && turn=="black" != board2.getSquare(r, c).getPiece().isWhite()) {
                         temp = board2.getSquare(r, c);
 
                     }
@@ -111,7 +111,7 @@ public class EndState {
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                if ("King" == board.getSquare(r, c).getPiece().toString() && turn=="white" == board.getSquare(r, c).getPiece().isWhite()) {
+                if ("King" == board.getSquare(r, c).getPiece().toString() && turn=="black" == board.getSquare(r, c).getPiece().isWhite()) {
                     king = board.getSquare(r, c);
 
                 }

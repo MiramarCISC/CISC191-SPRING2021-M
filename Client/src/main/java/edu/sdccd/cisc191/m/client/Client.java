@@ -39,12 +39,14 @@ public class Client {
 
     //if its this turn
     private static String turn;
+    private static String color;
 
 
     // constructor for client
     public Client() {
         scnr = new Scanner(System.in);
     }
+
 
 
 
@@ -55,6 +57,8 @@ public class Client {
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         turn = in.readLine();
+        color = in.readLine();
+
     }
 
     //sends a request for a move returns if response is valid
@@ -97,9 +101,6 @@ public class Client {
 
     //helper method -- get respond field
     public static MoveResponse getResponse() {
-
-
-
         return respond;
     }
 
@@ -152,12 +153,15 @@ public class Client {
             gameView = new GameView();
 
             // what turn am I
-            System.out.println(turn);
+            System.out.println(color);
+            System.out.println(turn +'1');
 
             //game loop
             //##### problem while true -- and working with alternating information between clients
             while (true) {
-                if (turn == "true") {
+
+                if (turn.equals("true")) {
+                    System.out.println(respond +" true");
                     //send --> move we want to make
 
                     //listen --> for if valid
@@ -168,6 +172,7 @@ public class Client {
 
 
                     //send
+                    System.out.println("Reached Send Request");
                     client.sendRequest();
 
                     System.out.println(respond.toString());
@@ -181,14 +186,46 @@ public class Client {
 
                     //check if leagl move if king castle update gui if queen castle update gui else update gui
                     if (respond.toString().contains("is legal")) {
+                        System.out.println("Update Gui After Legal");
                         updateGUI();
                         turn = "false";
+
+
                     }
 
+                }else {
 
-                }else{
+                    if(respond == null){
+                        respond = MoveResponse.fromJSON(in.readLine());
+
+                        srow = client.getResponse().getRequest().getSrow();
+                        scol = client.getResponse().getRequest().getScol();
+
+                        erow = client.getResponse().getRequest().getErow();
+                        ecol = client.getResponse().getRequest().getEcol();
+                    } else {
+
+                        respond = MoveResponse.fromJSON(in.readLine());
+                        if (!respond.getTurn().equals(color)) {
+
+
+                            srow = client.getResponse().getRequest().getSrow();
+                            scol = client.getResponse().getRequest().getScol();
+
+                            erow = client.getResponse().getRequest().getErow();
+                            ecol = client.getResponse().getRequest().getEcol();
+                        }
+                    }
+
+                    if (!respond.getTurn().equals(color)) {
+                        //check if we recieved a move yet
+                        System.out.println(respond + " false");
+
                         updateGUI();
                         turn = "true";
+
+                    }
+
                 }
             }
 

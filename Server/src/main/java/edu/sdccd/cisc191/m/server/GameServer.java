@@ -79,9 +79,11 @@ public class GameServer {
 
         //send to client about which color they are
         out.println("true");
+        out.println("white");
         out = new PrintWriter(clientSocket2.getOutputStream(), true);
         System.out.println("Switched to Client 2");
         out.println("false");
+        out.println("black");
 
         board.resetBoard();
         board.displayBoard();
@@ -155,10 +157,14 @@ public class GameServer {
             //response to the move
 
             //Send move to client 1
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
             out.println(MoveResponse.toJSON(response));
             out = new PrintWriter(clientSocket2.getOutputStream(), true);
             out.println(MoveResponse.toJSON(response));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+            checkGameIsOver();
+
         }else{
             //send back asking for new move
             if( turn == "white"){
@@ -213,7 +219,7 @@ public class GameServer {
     public void checkGameIsOver() {
         if (legal & EndState.stalemate(board, turn)) {
             if (turn.equals("black")) {
-                System.out.println("Black is Stalemated");
+                System.out.println("White is Stalemated");
 
                 try {
                     server.stop();
@@ -223,10 +229,11 @@ public class GameServer {
 
 
             } else {
-                System.out.println("White is Stalemated");
+                System.out.println("Black is Stalemated");
                 try {
                     server.stop();
                 } catch (Exception e) {
+
 
                 }
 
@@ -236,7 +243,7 @@ public class GameServer {
 
         if (legal && EndState.isCheckmated(board, turn)) {
             if (turn.equals("black")) {
-                System.out.println("Black is Checkmated");
+                System.out.println("White is Checkmated");
 
                 try {
                     server.stop();
@@ -245,7 +252,7 @@ public class GameServer {
                 }
 
             } else {
-                System.out.println("White is Checkmated");
+                System.out.println("Black is Checkmated");
 
                 try {
                     server.stop();
@@ -618,18 +625,26 @@ public class GameServer {
 
             server.init(4444);
 
+            while (true){
+                server.get_response_c1();
+                System.out.println("After getResponse");
+                while(!server.check_valid_move()){
+                    server.send_resp(request);
+                    server.get_response_c1();
+                }
+                System.out.println("After Valid Move");
+                server.send_resp(request);
+                System.out.println("After send resp");
+                server.get_response_c2();
+                System.out.println("After getResponse2");
+                while(!server.check_valid_move()){
+                    server.send_resp(request);
+                    server.get_response_c2();
+                }
+                System.out.println("After Valid Move2");
+                server.send_resp(request);
+            }
 
-            server.get_response_c1();
-            System.out.println("After getResponse");
-            server.check_valid_move();
-            System.out.println("After Valid Move");
-            server.send_resp(request);
-            System.out.println("After send resp");
-            server.get_response_c2();
-            System.out.println("After getResponse2");
-            server.check_valid_move();
-            System.out.println("After Valid Move2");
-            server.send_resp(request);
 
 
 
